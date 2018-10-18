@@ -8,20 +8,13 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-if(WIN32)
-  set(sources_windows
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.cpp
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.h
-  )
-endif(WIN32)
+# Need to pass old ${CMAKE_BINARY_DIR} as param because its different at build stage
+add_custom_target(revision_data.h ALL
+  COMMAND "${CMAKE_COMMAND}" -DBUILDDIR="${CMAKE_BINARY_DIR}" -P "${CMAKE_SOURCE_DIR}/cmake/genrev.cmake" "${CMAKE_BINARY_DIR}"
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+)
 
-add_subdirectory(genrev)
-add_subdirectory(common)
-
-if(SERVERS)
-  add_subdirectory(server)
-endif(SERVERS)
-
-if(TOOLS)
-  #add_subdirectory(tools)
-endif(TOOLS)
+set_target_properties(revision_data.h
+    PROPERTIES
+      FOLDER
+        "server")

@@ -8,20 +8,15 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-if(WIN32)
-  set(sources_windows
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.cpp
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.h
-  )
-endif(WIN32)
+add_library(rapidjson INTERFACE)
 
-add_subdirectory(genrev)
-add_subdirectory(common)
+target_include_directories(rapidjson
+  INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR})
 
-if(SERVERS)
-  add_subdirectory(server)
-endif(SERVERS)
-
-if(TOOLS)
-  #add_subdirectory(tools)
-endif(TOOLS)
+target_compile_definitions(rapidjson
+  INTERFACE
+    -DRAPIDJSON_HAS_STDSTRING
+    -DRAPIDJSON_SSE2
+    -DRAPIDJSON_48BITPOINTER_OPTIMIZATION=0
+    -DRAPIDJSON_ASSERT=WPAssert)

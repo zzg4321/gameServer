@@ -16,7 +16,7 @@ set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
 # Set projectname (must be done AFTER setting configurationtypes)
-project(TrinityCore)
+project(ServerTest)
 
 # CMake policies (can not be handled elsewhere)
 cmake_policy(SET CMP0005 OLD)
@@ -77,7 +77,7 @@ include(cmake/genrev.cmake)
 include(cmake/showoptions.cmake)
 
 # add dependencies
-#add_subdirectory(dep)
+add_subdirectory(dep)
 
 # add core sources
 add_subdirectory(src)

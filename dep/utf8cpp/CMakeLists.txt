@@ -8,20 +8,8 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-if(WIN32)
-  set(sources_windows
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.cpp
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.h
-  )
-endif(WIN32)
+add_library(utf8cpp INTERFACE)
 
-add_subdirectory(genrev)
-add_subdirectory(common)
-
-if(SERVERS)
-  add_subdirectory(server)
-endif(SERVERS)
-
-if(TOOLS)
-  #add_subdirectory(tools)
-endif(TOOLS)
+target_include_directories(utf8cpp
+  INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR})

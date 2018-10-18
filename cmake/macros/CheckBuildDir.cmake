@@ -8,20 +8,16 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-if(WIN32)
-  set(sources_windows
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.cpp
-    ${CMAKE_SOURCE_DIR}/src/common/Debugging/WheatyExceptionReport.h
-  )
-endif(WIN32)
+#
+# Force out-of-source build
+#
 
-add_subdirectory(genrev)
-add_subdirectory(common)
+string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" BUILDING_IN_SOURCE)
 
-if(SERVERS)
-  add_subdirectory(server)
-endif(SERVERS)
-
-if(TOOLS)
-  #add_subdirectory(tools)
-endif(TOOLS)
+if( BUILDING_IN_SOURCE )
+  message(FATAL_ERROR "
+    This project requires an out of source build. Remove the file 'CMakeCache.txt'
+    found in this directory before continuing, create a separate build directory
+    and run 'cmake path_to_project [options]' from there.
+  ")
+endif()
