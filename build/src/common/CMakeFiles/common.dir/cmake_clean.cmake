@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "cotire/common_CXX_prefix.hxx.pch"
+  "cotire/common_CXX_prefix.hxx"
+  "cotire/common_CXX_prefix.cxx"
+  "CMakeFiles/common.dir/Common.cpp.o"
+  "CMakeFiles/common.dir/GitRevision.cpp.o"
+  "CMakeFiles/common.dir/Configuration/BuiltInConfig.cpp.o"
+  "CMakeFiles/common.dir/Configuration/Config.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/ARC4.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/BigNumber.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/HmacHash.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/OpenSSLCrypto.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/RSA.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/SHA1.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/SHA256.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/Authentication/PacketCrypt.cpp.o"
+  "CMakeFiles/common.dir/Cryptography/Authentication/WorldPacketCrypt.cpp.o"
+  "CMakeFiles/common.dir/DataStores/DB2FileLoader.cpp.o"
+  "CMakeFiles/common.dir/DataStores/DB2FileSystemSource.cpp.o"
+  "CMakeFiles/common.dir/DataStores/DB2Meta.cpp.o"
+  "CMakeFiles/common.dir/Logging/Appender.cpp.o"
+  "CMakeFiles/common.dir/Logging/AppenderConsole.cpp.o"
+  "CMakeFiles/common.dir/Logging/AppenderFile.cpp.o"
+  "CMakeFiles/common.dir/Logging/Log.cpp.o"
+  "CMakeFiles/common.dir/Logging/LogMessage.cpp.o"
+  "CMakeFiles/common.dir/Logging/LogOperation.cpp.o"
+  "CMakeFiles/common.dir/Logging/Logger.cpp.o"
+  "CMakeFiles/common.dir/Threading/ProcessPriority.cpp.o"
+  "CMakeFiles/common.dir/Utilities/EventMap.cpp.o"
+  "CMakeFiles/common.dir/Utilities/EventProcessor.cpp.o"
+  "CMakeFiles/common.dir/Utilities/Random.cpp.o"
+  "CMakeFiles/common.dir/Utilities/StartProcess.cpp.o"
+  "CMakeFiles/common.dir/Utilities/TaskScheduler.cpp.o"
+  "CMakeFiles/common.dir/Utilities/Util.cpp.o"
+  "CMakeFiles/common.dir/Debugging/Errors.cpp.o"
+  "libcommon.pdb"
+  "libcommon.a"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/common.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

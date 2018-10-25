@@ -1,0 +1,20 @@
+# Hashes of file build rules.
+f9cc2f20340c7f28ac90302c82f73bc3 CMakeFiles/uninstall
+c19793d1b65d46002aa9c5917765e176 src/common/CMakeFiles/clean_cotire
+5303c3a924d820b70e91e33011843cf4 src/common/CMakeFiles/common_pch
+340f4fbefcba4c32eca02d34d4c0184b src/common/cotire/common_CXX_prefix.cxx
+3ea0b56c1dd8d0e75aa4c9a14758de86 src/common/cotire/common_CXX_prefix.hxx
+6056f45d005877a8bebab62f075768ff src/common/cotire/common_CXX_prefix.hxx.pch
+74b3683edffd73f09890b7ee9d309b1f src/genrev/CMakeFiles/revision_data.h
+37b33d937dc62c98c51fbf68a8436b21 src/server/database/CMakeFiles/database_pch
+9c82f1629159f47e252859599dad9531 src/server/database/cotire/database_CXX_prefix.cxx
+ee22dfbccaa29938bea3c7b96d236865 src/server/database/cotire/database_CXX_prefix.hxx
+8a0f1f0eed032bcb244200f02584ee22 src/server/database/cotire/database_CXX_prefix.hxx.pch
+784bf90a79a1a21cb96f277747430525 src/server/game/cotire/game_CXX_prefix.cxx
+28c7d2b35dc72d02bdd93beb22838cd3 src/server/game/cotire/game_CXX_prefix.hxx
+a7a9779f74764268de508bbd5553f8d3 src/server/loginserver/cotire/loginserver_CXX_prefix.cxx
+22c0d8f18660587d93e03ad213749b70 src/server/loginserver/cotire/loginserver_CXX_prefix.hxx
+315f8a1569bddb95eaf9c00e006fc7c3 src/server/shared/CMakeFiles/shared_pch
+dd48f7a7b84a770701b15dc391e90235 src/server/shared/cotire/shared_CXX_prefix.cxx
+0cec8ea3c02eceddbbeaeb1d0dd8895f src/server/shared/cotire/shared_CXX_prefix.hxx
+b74d478ee609e969807fa227a6cf6231 src/server/shared/cotire/shared_CXX_prefix.hxx.pch
