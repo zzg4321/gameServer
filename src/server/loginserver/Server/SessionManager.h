@@ -15,24 +15,31 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ProtobufJSON_h__
-#define ProtobufJSON_h__
+#ifndef SessionManager_h__
+#define SessionManager_h__
 
-#include "Define.h"
-#include <string>
+#include "SocketMgr.h"
+#include "Session.h"
 
-namespace google
+namespace Battlenet
 {
-    namespace protobuf
+    class SessionManager : public SocketMgr<Session>
     {
-        class Message;
-    }
+        typedef SocketMgr<Session> BaseSocketMgr;
+
+    public:
+        static SessionManager& Instance();
+
+        bool StartNetwork(Trinity::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, int threadCount = 1) override;
+
+    protected:
+        NetworkThread<Session>* CreateThreads() const override;
+
+    private:
+        static void OnSocketAccept(tcp::socket&& sock, uint32 threadIndex);
+    };
 }
 
-namespace JSON
-{
-//    TC_SHARED_API std::string Serialize(google::protobuf::Message const& message);
-//    TC_SHARED_API bool Deserialize(std::string const& json, google::protobuf::Message* message);
-}
+#define sSessionMgr Battlenet::SessionManager::Instance()
 
-#endif // ProtobufJSON_h__
+#endif // SessionManager_h__

@@ -15,24 +15,20 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ProtobufJSON_h__
-#define ProtobufJSON_h__
+#ifndef SslContext_h__
+#define SslContext_h__
 
-#include "Define.h"
-#include <string>
+#include <boost/asio/ssl/context.hpp>
 
-namespace google
+namespace Battlenet
 {
-    namespace protobuf
+    class SslContext
     {
-        class Message;
-    }
+    public:
+        static bool Initialize();
+
+        static boost::asio::ssl::context& instance();
+    };
 }
 
-namespace JSON
-{
-//    TC_SHARED_API std::string Serialize(google::protobuf::Message const& message);
-//    TC_SHARED_API bool Deserialize(std::string const& json, google::protobuf::Message* message);
-}
-
-#endif // ProtobufJSON_h__
+#endif // SslContext_h__
