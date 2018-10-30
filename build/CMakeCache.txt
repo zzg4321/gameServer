@@ -345,10 +345,13 @@ ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
 ZLIB_LIBRARY_RELEASE:FILEPATH=/usr/lib/libz.dylib
 
 //Dependencies for the target
-common_LIB_DEPENDS:STATIC=general;fmt;general;g3dlib;general;Detour;general;valgrind;general;jemalloc;
+common_LIB_DEPENDS:STATIC=general;fmt;general;g3dlib;general;Detour;general;valgrind;
 
 //Dependencies for the target
 database_LIB_DEPENDS:STATIC=general;common;general;mysql;
+
+//Dependencies for the target
+proto_LIB_DEPENDS:STATIC=general;common;general;protobuf;
 
 //Dependencies for the target
 shared_LIB_DEPENDS:STATIC=general;database;general;proto;general;zlib;general;gsoap;
@@ -478,7 +481,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=23
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=25
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -526,7 +529,9 @@ COTIREMSG_database:INTERNAL=CXX target database cotired without unity build.
 //game cotire message.
 COTIREMSG_game:INTERNAL=CXX target game cotired without unity build and precompiled header. Too few applicable sources.
 //loginserver cotire message.
-COTIREMSG_loginserver:INTERNAL=CXX target loginserver cotired without unity build and precompiled header. Too few applicable sources.
+COTIREMSG_loginserver:INTERNAL=CXX target loginserver cotired without unity build.
+//proto cotire message.
+COTIREMSG_proto:INTERNAL=CXX target proto cotired without unity build and precompiled header. Too few applicable sources.
 //shared cotire message.
 COTIREMSG_shared:INTERNAL=CXX target shared cotired without unity build.
 //Details about finding Threads

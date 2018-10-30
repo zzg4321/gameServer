@@ -31,8 +31,8 @@ namespace google
 
 namespace JSON
 {
-//    TC_SHARED_API std::string Serialize(google::protobuf::Message const& message);
-//    TC_SHARED_API bool Deserialize(std::string const& json, google::protobuf::Message* message);
+    TC_SHARED_API std::string Serialize(google::protobuf::Message const& message);
+    TC_SHARED_API bool Deserialize(std::string const& json, google::protobuf::Message* message);
 }
 
 #endif // ProtobufJSON_h__

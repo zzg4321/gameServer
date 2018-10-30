@@ -27,7 +27,7 @@
 #include "QueryCallbackProcessor.h"
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ssl.hpp>
-//#include <google/protobuf/message.h>
+#include <google/protobuf/message.h>
 #include <memory>
 
 using boost::asio::ip::tcp;
