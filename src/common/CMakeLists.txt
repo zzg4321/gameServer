@@ -65,7 +65,7 @@ target_link_libraries(common
   PUBLIC
     boost
     fmt
-    g3dlib
+    # g3dlib
     Detour
     sfmt
     utf8cpp

@@ -18,7 +18,7 @@
 #ifndef Session_h__
 #define Session_h__
 
-//#include "Realm.h"
+#include "Realm.h"
 #include "SslContext.h"
 #include "SslSocket.h"
 #include "Socket.h"
