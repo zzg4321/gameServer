@@ -1,7 +1,14 @@
 
 #include "Config.h"
 #include "GitRevision.h"
-
+#include "AppenderDB.h"
+#include "RealmList.h"
+#include "SessionManager.h"
+#include "SslContext.h"
+#include "Util.h"
+#include "DatabaseEnv.h"
+#include "DatabaseLoader.h"
+#include "MySQLThreading.h"
 #include <boost/asio/signal_set.hpp>
 #include <boost/program_options.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -20,7 +27,7 @@ namespace fs = boost::filesystem;
 
 #if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
 #include "ServiceWin32.h"
-char serviceName[] = "bnetserver";
+char serviceName[] = "loginserver";
 char serviceLongName[] = "TrinityCore bnet service";
 char serviceDescription[] = "TrinityCore Battle.net emulator authentication service";
 /*
@@ -34,7 +41,8 @@ int m_ServiceStatus = -1;
 void ServiceStatusWatcher(std::weak_ptr<boost::asio::deadline_timer> serviceStatusWatchTimerRef, std::weak_ptr<Trinity::Asio::IoContext> ioContextRef, boost::system::error_code const& error);
 #endif
 variables_map GetConsoleArguments(int argc, char** argv, fs::path& configFile, std::string& configService);
-
+bool StartDB();
+void StopDB();
 
 int main(int argc, char** argv)
 {
@@ -48,6 +56,62 @@ int main(int argc, char** argv)
     std::shared_ptr<void> protobufHandle(nullptr, [](void*) {
         printf("i test what\n");
         google::protobuf::ShutdownProtobufLibrary(); });
+    
+    
+    std::string configError;
+    if (!sConfigMgr->LoadInitial(configFile.generic_string(),
+                                 std::vector<std::string>(argv, argv + argc),
+                                 configError))
+    {
+        printf("Error in config file: %s\n", configError.c_str());
+        return 1;
+    }
+    sLog->RegisterAppender<AppenderDB>();
+    sLog->Initialize(nullptr);
+    TC_LOG_INFO("realmlist","log Initialize");
+    
+    // bnetserver PID file creation
+    std::string pidFile = sConfigMgr->GetStringDefault("PidFile", "");
+    if (!pidFile.empty())
+    {
+        if (uint32 pid = CreatePIDFile(pidFile))
+            TC_LOG_INFO("server.bnetserver", "Daemon PID: %u\n", pid);
+        else
+        {
+            TC_LOG_ERROR("server.bnetserver", "Cannot create PID file %s.\n", pidFile.c_str());
+            return 1;
+        }
+    }
+    
+    if (!StartDB())
+        return 1;
+    std::shared_ptr<void> dbHandle(nullptr, [](void*) { StopDB(); });
+    std::shared_ptr<Trinity::Asio::IoContext> ioContext = std::make_shared<Trinity::Asio::IoContext>();
+    
+    int32 bnport = sConfigMgr->GetIntDefault("BattlenetPort", 1119);
+    if (bnport < 0 || bnport > 0xFFFF)
+    {
+        TC_LOG_ERROR("server.bnetserver", "Specified battle.net port (%d) out of allowed range (1-65535)", bnport);
+        return 1;
+    }
+    
+    if (!sLoginService.Start(ioContext.get()))
+    {
+        TC_LOG_ERROR("server.bnetserver", "Failed to initialize login service");
+        return 1;
+    }
+    
+    std::shared_ptr<void> sLoginServiceHandle(nullptr, [](void*) { sLoginService.Stop(); });
+    
+    // Get the list of realms for the server
+    sRealmList->Initialize(*ioContext, sConfigMgr->GetIntDefault("RealmsStateUpdateDelay", 20));
+    TC_LOG_INFO("realmlist","sRealmList Initialize");
+    std::shared_ptr<void> sRealmListHandle(nullptr, [](void*) { sRealmList->Close(); });
+    
+    
+    printf("ioContext->run\n");
+    
+    ioContext->run();
     printf("exit main\n");
     return 0;
 }
@@ -91,4 +155,25 @@ variables_map GetConsoleArguments(int argc, char** argv, fs::path& configFile, s
     }
     
     return variablesMap;
+}
+bool StartDB()
+{
+    MySQL::Library_Init();
+    
+    // Load databases
+    DatabaseLoader loader("server.loginserver", DatabaseLoader::DATABASE_NONE);
+    loader
+    .AddDatabase(LoginDatabase, "Login");
+    
+    if (!loader.Load())
+        return false;
+    
+    TC_LOG_INFO("server.bnetserver", "Started auth database connection pool.");
+    sLog->SetRealmId(0); // Enables DB appenders when realm is set.
+    return true;
+}
+void StopDB()
+{
+    LoginDatabase.Close();
+    MySQL::Library_End();
 }
